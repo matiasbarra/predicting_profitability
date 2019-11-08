@@ -16,10 +16,8 @@ pacman::p_load("readr", "ggplot2", "rpart", "rpart.plot", "caret","dplyr", "Hmis
                "MASS", "mlr", "plotly", "corrplot", 
                "party", "ipred", "LearnBayes", "reshape")
 
-library("caret")
 
-
-# import data sets & run initial exploration
+####--------- import data sets and initial exploration -------------------------#### 
 setwd("/Users/matiasbarra/Documents/Data_Analytics_Course/Data_Analytics_2/3_Multiple_Regression_R")
 existing <- read.csv("./data/existingprod.csv", header = TRUE, check.names=FALSE,sep = ",", quote = "\'", as.is = TRUE)
 summary(existing)
@@ -36,7 +34,6 @@ str(new)#24 obs. of  18 variables
 
 summary(is.na(existing))  # confirm if any "NA" values in ds
 summary(is.na(new))   # confirm if any "NA" values in ds
-
 
 
 ####----------------- Cleaning data -------------------------------------------------####
@@ -98,7 +95,6 @@ corre_mat_2 <- corrplot(corrData, type = "upper", order = "hclust",
 # Moreover, 5 star Reviews is excluded as it might be flawed data (correlation = 1)
 existing$x5StarReviews <- NULL
 existing.prod$x5StarReviews <- NULL
-
 
 control.tree <- ctree_control(maxdepth = 10)
 Decision.tree <- ctree (Volume ~ ., data=existing.prod, 
@@ -165,23 +161,23 @@ compare_mod_var_melt
 
 # Ploting Metrics of each Model
 
-# ggplot(compare_mod_var_melt[which(compare_mod_var_melt$metric=="MAE"),], aes(x=model, y=value,fill=model))+ 
-#   geom_col() + ggtitle("MAE Metrics in diferents Models") + 
-#   theme(axis.title.x=element_blank(),
-#         axis.text.x=element_blank(),
-#         axis.ticks.x=element_blank())
-# 
-# ggplot(compare_mod_var_melt[which(compare_mod_var_melt$metric=="RMSE"),], aes(x=model, y=value,fill=model))+ 
-#   geom_col() + ggtitle("RMSE Metrics in diferents Models") +
-#   theme(axis.title.x=element_blank(),
-#         axis.text.x=element_blank(),
-#         axis.ticks.x=element_blank())
-# 
-# ggplot(compare_mod_var_melt[which(compare_mod_var_melt$metric=="Rsquared"),], aes(x=model, y=value,fill=model))+ 
-#   geom_col() + ggtitle("Rsqared Metrics in diferents Models") +
-#   theme(axis.title.x=element_blank(),
-#         axis.text.x=element_blank(),
-#         axis.ticks.x=element_blank())
+ggplot(compare_mod_var_melt[which(compare_mod_var_melt$metric=="MAE"),], aes(x=model, y=value,fill=model))+
+  geom_col() + ggtitle("MAE Metrics in diferents Models") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+ggplot(compare_mod_var_melt[which(compare_mod_var_melt$metric=="RMSE"),], aes(x=model, y=value,fill=model))+
+  geom_col() + ggtitle("RMSE Metrics in diferents Models") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+ggplot(compare_mod_var_melt[which(compare_mod_var_melt$metric=="Rsquared"),], aes(x=model, y=value,fill=model))+
+  geom_col() + ggtitle("Rsqared Metrics in diferents Models") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
 
 # Ploting "Compare Models and Metrics"
 
@@ -192,7 +188,7 @@ ggplot(compare_mod_var_melt, aes(x=model, y=value,fill=model))+
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank())
 
-#### Predictions of the models in New ds####
+####-------------- Predictions of the models in New ds ----------------------------####
 
 new$x5StarReviews <- NULL
 new$x5StarReviews <- NULL
