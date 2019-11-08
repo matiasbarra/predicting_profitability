@@ -93,6 +93,7 @@ corre_mat_2 <- corrplot(corrData, type = "upper", order = "hclust",
 # 4 stars is kept as its correlation to Volume is higher.
 # PositiveServiceReview has good correlated with Volume and not good correlation with 4 stars
 # Moreover, 5 star Reviews is excluded as it might be flawed data (correlation = 1)
+
 existing$x5StarReviews <- NULL
 existing.prod$x5StarReviews <- NULL
 
@@ -195,6 +196,7 @@ new$x5StarReviews <- NULL
 
 str(new)
 
+# Creating prediction 
 PredNew <- predict(models[[6]], newdata = new)  
 PredNew
 
@@ -242,4 +244,7 @@ ggplot(new, aes(x = ProductType, y = Profitability, fill = as.character(ProductN
       xlab("Product Type") +
       guides(fill = guide_legend(title="Product Number"))
 
+
+# export final CSV 
+write.csv(new, file="ProductProfitability.csv", row.names = TRUE)
 
